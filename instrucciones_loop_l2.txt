@@ -1,0 +1,42 @@
+Tarea de Packet Tracer: Creación y resolución de un loop de capa 2
+
+
+1. Pasos y comandos para lograr el loop 
+
+El spanning tree protocol está habilitado por defecto en los switches Cisco para prevenir bucles de red. Para forzar un bucle, se debe deshabilitar manualmente STP en cada switch que forma parte del ciclo físico.
+
+Paso 1: Entrar a la interfaz de consola de cada uno de los tres switches.
+
+Paso 2: Ejecutar los siguientes comandos en cada switch:
+
+Switch> enable
+Switch# configure terminal
+Switch(config)# no spanning-tree vlan 1
+Switch(config)# end
+
+Al ejecutar estos comandos en los tres switches, los puertos bloqueados por STP se activan, permitiendo que los paquetes de broadcast circulen infinitamente, provocando una tormenta de broadcast visible por el parpadeo constante y rápido de todos los enlaces.
+
+2. Cómo romper el loop
+
+Para detener la tormenta de broadcast y restablecer la estabilidad de la red, se debe volver a habilitar el mecanismo de prevención de bucles o eliminar físicamente un enlace.
+
+Rehabilitar STP:
+Entrar a la CLI de uno o más switches y volver a encender spanning tree. El protocolo recalculará la topología y bloqueará un puerto automáticamente.
+
+Comandos para rehabilitar STP en cada uno de los switches:
+
+Switch> enable
+Switch# configure terminal
+Switch(config)# spanning-tree vlan 1
+Switch(config)# end
+
+Opción Alternativa:
+Ingresar a uno de los switches y apagar una de las interfaces que forman el ciclo para romper el camino cerrado.
+
+Comandos:
+
+Switch> enable
+Switch# configure terminal
+Switch(config)# interface fastEthernet 0/1  (o la interfaz que conecte con otro switch)
+Switch(config-if)# shutdown
+Switch(config-if)# end
